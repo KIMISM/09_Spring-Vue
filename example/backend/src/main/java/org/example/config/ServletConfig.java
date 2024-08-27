@@ -14,7 +14,8 @@ import org.springframework.web.servlet.view.JstlView;
 @ComponentScan(basePackages = {
         "org.example.controller",
         "org.example.exception",
-        "org.example.board.controller"
+        "org.example.board.controller",
+        "org.example.member.controller",
 })
 public class ServletConfig implements WebMvcConfigurer {
     @Override
