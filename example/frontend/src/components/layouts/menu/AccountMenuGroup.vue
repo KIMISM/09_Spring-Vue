@@ -5,9 +5,12 @@ import AccountMenuItem from './AccountMenuItem.vue';
 import LogoutMenuItem from './LogoutMenuItem.vue';
 import config from '@/config';
 const { login, join } = config.accountMenus;
+import { useAuthStore } from '@/stores/auth.js';
+
+const auth = useAuthStore();
 // 로그인 여부
-const islogin = computed(() => false);
-const username = computed(() => ''); // 임시: 사용자명 없음
+const islogin = computed(() => auth.isLogin); //로인 상태를 반응형으로 처리
+const username = computed(() => auth.username);
 </script>
 <template>
   <ul class="navbar-nav ms-auto">

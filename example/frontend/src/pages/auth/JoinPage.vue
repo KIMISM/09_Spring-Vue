@@ -64,7 +64,7 @@ const join = async () => {
   <div class="mt-5 mx-auto" style="width: 500px">
     <h1 class="my-5">
       <i class="fa-solid fa-user-plus"></i>
-      회원가입 페이지
+      회원가입
     </h1>
 
     <!-- form을 제출할 경우 기본 동작인 서버 전송은 하지 않고 join 메소드만 부르겠다 -->

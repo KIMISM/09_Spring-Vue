@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.member.dto.MemberDTO;
 import org.example.member.dto.MemberJoinDTO;
+import org.example.member.dto.MemberUpdateDTO;
+import org.example.member.exception.PasswordMissmatchException;
 import org.example.member.mapper.MemberMapper;
 import org.example.security.account.domain.AuthVO;
 import org.example.security.account.domain.MemberVO;
@@ -23,6 +25,8 @@ import java.util.Optional;
 public class MemberServiceImpl implements MemberService {
     final PasswordEncoder passwordEncoder; // 비밀번호 암호화를 위한 인코더
     final MemberMapper mapper; //DB 접근을 위한 매퍼
+
+
 
     @Override
     public boolean checkDuplicate(String username) {
@@ -68,6 +72,21 @@ public class MemberServiceImpl implements MemberService {
 
 //       해당 유저의 아바타 이미지 저장
         saveAvatar(dto.getAvatar(), member.getUsername()); //저장된 회원 정보 반환
+        return get(member.getUsername());
+    }
+    @Override
+    public MemberDTO update(MemberUpdateDTO member) {
+        MemberVO vo = mapper.get(member.getUsername());
+//        암호화된 비밀번호를 비교해주기 위해서는 반드시 matches 사용
+        if(!passwordEncoder.matches(member.getPassword(), vo.getPassword())) {
+            throw new PasswordMissmatchException(); //비밀번호 불일치 시 예외 발생
+        }
+//        업데이트할 정보를 DB에 반영
+        mapper.update(member.toVO());
+//        새로운 아바타 저장
+        saveAvatar(member.getAvatar(), member.getUsername());
+        
+//        업데이트된 회원 정보 반환
         return get(member.getUsername());
     }
 }

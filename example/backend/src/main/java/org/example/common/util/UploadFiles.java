@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
 
@@ -34,6 +35,7 @@ public class UploadFiles {
             return "0";
         final String[] units = new String[]{"Bytes", "KB", "MB", "GB", "TB"};
         int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
+//        파일 크기를 계산된 단위로 변환하고 포맷팅하여 문자열로 반환
         return new DecimalFormat("#,##0.#").format(size / Math.pow(1024,digitGroups)) + " " + units[digitGroups];
     }
     public static void download(HttpServletResponse response, File file, String orgName) throws Exception {
@@ -48,6 +50,25 @@ public class UploadFiles {
             BufferedOutputStream bos = new BufferedOutputStream(os); {
             Files.copy(Paths.get(file.getPath()),bos);
             }
+        }
+    }
+//    파일의 다운로드를 처리해주는 메소드(저장용)
+    public static void downloadImage(HttpServletResponse response, File file) {
+        try{
+            Path path = Path.of(file.getPath());
+            String mimeType = Files.probeContentType(path); //팡리의 MIME 타입 추출
+            response.setContentType(mimeType); //response의 타입 설정
+            response.setContentLength((int)file.length()); //response의 길이 설정
+
+//            OutputStream은 출력 스트림
+//            파일을 클라이언트로 전송하기 위해 출력 스트림 사용
+            try(OutputStream os = response.getOutputStream();
+                BufferedOutputStream bos = new BufferedOutputStream(os)){
+                Files.copy(path, bos);
+            }
+        }
+        catch(Exception e){
+            throw new RuntimeException(e);
         }
     }
 }

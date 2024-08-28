@@ -3,9 +3,12 @@ package org.example.member.service;
 
 import org.example.member.dto.MemberDTO;
 import org.example.member.dto.MemberJoinDTO;
+import org.example.member.dto.MemberUpdateDTO;
 
 public interface MemberService {
-//    주어진 사용자 이름이 중복되는지 확인
+    MemberDTO update(MemberUpdateDTO member);
+
+    //    주어진 사용자 이름이 중복되는지 확인
     boolean checkDuplicate(String username);
 //주어진 사용자 이름으로 회원 정보를 가져옴
     MemberDTO get(String username);
