@@ -77,16 +77,26 @@ public class BoardServiceImpl implements BoardService {
                 mapper.createAttachment(attach);
             }catch (IOException e){
                 throw new RuntimeException(e);
+                //log.error(e.getMessage());
             }
         }
     }
 
     @Override
     public BoardDTO update(BoardDTO board) {
-
         log.info("update.........." + board);
+
+        BoardVO boardVO = board.toVO();
+        log.info("update.........." + boardVO);
 //        mapper의 update를 호출해서 행 수정
-        mapper.update(board.toVO());
+        mapper.update(boardVO);
+
+//        파일 업로드 처리
+        List<MultipartFile> files = board.getFiles();
+        if(files != null && !files.isEmpty()) {
+//            첨부되 파일이 있을 경우 파일 업로드
+            upload(board.getNo(),files);
+        }
 //바뀐 행을 가져와서 DTO로 반환
         return get(board.getNo());
     }

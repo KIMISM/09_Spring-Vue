@@ -1,4 +1,4 @@
-import api from 'axios';
+import api from '@/api';
 
 const BASE_URL = '/api/member'; //기본 URL 설정
 const headers = { 'Content-Type': 'multipart/form-data' };
@@ -24,6 +24,36 @@ export default {
     const { data } = await api.post(BASE_URL, formData, headers);
 
     console.log('AUTH POST: ', data);
+    return data;
+  },
+  async update(member) {
+    const formData = new FormData();
+    // 변경된 정보를 폼 데이터에 추가
+    formData.append('username', member.username);
+    formData.append('password', member.password);
+    formData.append('email', member.email);
+
+    if (member.avatar) {
+      // 아바타 이미지가 존재할 경우
+      formData.append('avatar', member.avatar);
+    }
+
+    const { data } = await api.put(
+      `${BASE_URL}/${member.username}`,
+      formData,
+      headers
+    );
+    console.log('AUTH PUT: ', data);
+    return data;
+  },
+  async changePassword(formData) {
+    // 세번째 값을 생략하면 기본값이 json 데이터 형태로 넘어간다
+    const { data } = await api.put(
+      `${BASE_URL}/${formData.username}/changepassword`,
+      formData
+    );
+    console.log('AUTH PUT: ', data);
+
     return data;
   },
 };

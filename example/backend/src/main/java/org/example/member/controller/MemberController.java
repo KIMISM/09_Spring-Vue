@@ -1,9 +1,9 @@
 package org.example.member.controller;
 
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.common.util.UploadFiles;
+import org.example.member.dto.ChangePasswordDTO;
 import org.example.member.dto.MemberDTO;
 import org.example.member.dto.MemberJoinDTO;
 import org.example.member.dto.MemberUpdateDTO;
@@ -46,6 +46,13 @@ public class MemberController {
 //    회원 프로필 변경 요청을 처리하는 메소드
     @PutMapping("/{username}")
     public ResponseEntity<MemberDTO> changeProfile(MemberUpdateDTO member) {
+//        객체를 통째로 받아서 그 안의 username을 경로 변수로 넘겨준다
         return ResponseEntity.ok(service.update(member));
+    }
+//    json 데이터로 넘겨줘야 하기 때문에 @RequestBody 사용
+    @PutMapping("/{username}/changepassword")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordDTO changePasswordDTO){
+        service.changePassword(changePasswordDTO);
+        return ResponseEntity.ok().build();
     }
 }

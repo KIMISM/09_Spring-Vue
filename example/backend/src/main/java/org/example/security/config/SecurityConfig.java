@@ -108,11 +108,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                로그인 인증 필터 설정(jwtUsernamePasswordAuthenticationFilter -> UsernamePasswordAuthenticationFilter)
             .addFilterBefore(jwtUsernamePasswordAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        http.httpBasic().disable() //기본 HTTP 인증 비활성화
-            .csrf().disable() //CSRF 비활성화
-                .formLogin().disable() //formLogin 비활성화
-                // 세션 생성 모드 설정(stateless : 세션 사용 안하겠다.)
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
 //예외 처리 설정
         http
                 .exceptionHandling()
@@ -124,7 +120,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests() //경로별 접근 권한 설정
                 .antMatchers(HttpMethod.OPTIONS).permitAll() //모든 OPTIONS 요청 허용
+                .antMatchers(HttpMethod.POST,"/api/member").authenticated()
+                .antMatchers(HttpMethod.PUT,"/api/member","/api/member/*/changepassword").authenticated()
                 .anyRequest().permitAll();//나머지 요청들은 모든 접근 허용
+
+        http.httpBasic().disable() //기본 HTTP 인증 비활성화
+                .csrf().disable() //CSRF 비활성화
+                .formLogin().disable() //formLogin 비활성화
+                // 세션 생성 모드 설정(stateless : 세션 사용 안하겠다.)
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     }
 

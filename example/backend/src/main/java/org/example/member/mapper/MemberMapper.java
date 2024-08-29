@@ -1,5 +1,6 @@
 package org.example.member.mapper;
 
+import org.example.member.dto.ChangePasswordDTO;
 import org.example.security.account.domain.AuthVO;
 import org.example.security.account.domain.MemberVO;
 
@@ -13,4 +14,6 @@ public interface MemberMapper {
     int insertAuth(AuthVO auth); // 회원 권한 정보 추가
 
     int update(MemberVO member); //회원 정보 업데이트
+
+    int updatePassword(ChangePasswordDTO changePasswordDTO); //비밀번호 변경
 }

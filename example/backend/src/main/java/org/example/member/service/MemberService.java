@@ -1,6 +1,7 @@
 package org.example.member.service;
 
 
+import org.example.member.dto.ChangePasswordDTO;
 import org.example.member.dto.MemberDTO;
 import org.example.member.dto.MemberJoinDTO;
 import org.example.member.dto.MemberUpdateDTO;
@@ -14,4 +15,6 @@ public interface MemberService {
     MemberDTO get(String username);
 // 회원 가입 처리, MemberJoinDTO를 받아 회원 정보를 저장하고, 저장된 회원 정보를 반환
     MemberDTO join(MemberJoinDTO member);
+//ChangePasswordDTO 객체를 인자로 받아 비밀번호 변경 작업을 수행
+    void changePassword(ChangePasswordDTO changePassword);
 }
