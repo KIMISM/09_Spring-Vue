@@ -15,9 +15,9 @@ public class SecurityInitializer extends AbstractSecurityWebApplicationInitializ
         return encodingFilter;
     }
 
-    @Override
-    protected void beforeSpringSecurityFilterChain(ServletContext servletContext) {
-//        보안 필터 실행 전에 인코딩 필터와 멀티파트 필터가 실행된다.
-        insertFilters(servletContext,encodingFilter(), new MultipartFilter());
-    }
+//    @Override
+//    protected void beforeSpringSecurityFilterChain(ServletContext servletContext) {
+////        보안 필터 실행 전에 인코딩 필터와 멀티파트 필터가 실행된다.
+//        insertFilters(servletContext,encodingFilter(), new MultipartFilter());
+//    }
 }

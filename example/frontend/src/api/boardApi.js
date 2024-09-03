@@ -62,7 +62,7 @@ export default {
       }
     }
 
-    const { data } = await api.put(`${BASE_URL}/${aricle.no}`, formData, {
+    const { data } = await api.put(`${BASE_URL}/${article.no}`, formData, {
       headers,
     });
     console.log('BOARD PUT: ', data);

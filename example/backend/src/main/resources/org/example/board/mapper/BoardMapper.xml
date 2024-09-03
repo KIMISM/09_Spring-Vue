@@ -6,6 +6,17 @@
 <!-- MyBatis 매퍼 설정 파일 -->
 <mapper namespace="org.example.board.mapper.BoardMapper">
 
+<!--    board 테이블에서 전체 게시글 개수 조회-->
+    <select id="getTotalCount" resultType="java.lang.Integer">
+        select count(*) from tbl_board
+    </select>
+
+<!--    board 테이블에서 offset 인덱스에서 시작해서 amount만큼 잘라낸 게시물을 no 내림차순으로 조회-->
+    <select id="getPage" resultType="BoardVO">
+        select * from tbl_board order by no desc
+            limit #{offset}, #{amount}
+    </select>
+
     <resultMap id="attachmentMap" type="org.example.board.domain.BoardAttachmentVO">
         <id column="ano" property="no"/>
         <result column="bno" property="bno"/>
@@ -46,6 +57,8 @@
         where b.no = #{no}
         order by filename
     </select>
+
+
 
 
     <!--    tbl_board 테이블의 title,content,writer 컬럼에 각각의 값을 집어넣는다-->

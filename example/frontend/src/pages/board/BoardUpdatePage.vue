@@ -76,6 +76,7 @@ load();
 
     <div class="mb-3 mt-3">
       <label class="form-label"> 기존 첨부파일</label>
+      <!-- 첨부파일들을 돌면서 이름과 휴지통 아이콘 생성, 휴지통 클릭시 해당 첨부차일 삭제됨 -->
       <div v-for="file in attachments" :key="file.no" class="attach">
         <i class="fa-solid fa-paperclip"></i> {{ file.filename }}
         <i
@@ -109,6 +110,9 @@ load();
     </div>
 
     <div class="my-5 text-center">
+      <button type="submit" class="btn btn-primary me-3">
+        <i class="fa-solid fa-check"></i>확인
+      </button>
       <button class="btn btn-primary me-3" type="button" @click="reset">
         <i class="fa-solid fa-undo"></i>취소
       </button>

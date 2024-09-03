@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.board.domain.BoardAttachmentVO;
 import org.example.board.dto.BoardDTO;
 import org.example.board.service.BoardService;
+import org.example.common.pagination.Page;
+import org.example.common.pagination.PageRequest;
 import org.example.common.util.UploadFiles;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,13 +22,19 @@ import java.util.List;
 @Slf4j //로깅을 위한 어노테이션
 public class BoardController {
     private final BoardService service;
+    //    http://localhost:8080/api/board
+//    전체 게시글 조회
+    @GetMapping("")
+    public ResponseEntity<Page> getList(PageRequest pageRequest) {
+        return ResponseEntity.ok(service.getPage(pageRequest));
+    }
 
 //    http://localhost:8080/api/board
-    @GetMapping("")
-    public ResponseEntity<List<BoardDTO>> getList() {
-//        상태 코드가 200이고 body타입이 List<BoardDTO>인 응답 객체를 리턴
-        return ResponseEntity.ok(service.getList());
-    }
+//    @GetMapping("")
+//    public ResponseEntity<List<BoardDTO>> getList() {
+////        상태 코드가 200이고 body타입이 List<BoardDTO>인 응답 객체를 리턴
+//        return ResponseEntity.ok(service.getList());
+//    }
     //    http://localhost:8080/api/board/1
 //    특정 게시글 조회
     @GetMapping("/{no}")
